@@ -1,3 +1,4 @@
+import moment from 'moment';
 import '../sass/form-builder.scss'
 import throttle from 'lodash/throttle'
 import Dom from './dom'
@@ -232,6 +233,11 @@ const FormBuilder = function(opts, element, $) {
       setTimeout(() => document.dispatchEvent(events.fieldAdded), 10)
     }
 
+    if (typeof field.customType !== 'undefined' && field.customType == 'time-saved') {
+      const now = moment().format('MMMM DD, YYYY hh:mm:ss a');
+      field.label = `Date/Time Saved: ${now}`;
+    }
+
     opts.onAddField(data.lastID, field)
     appendNewField(field, isNew)
 
@@ -266,7 +272,8 @@ const FormBuilder = function(opts, element, $) {
    * @param  {Object} fieldData
    * @return {String} field options markup
    */
-  const fieldOptions = function(fieldData) {
+  const fieldOptions = function(fieldData,isHidden = false) {
+    console.log(isHidden);
     const { type, values, name } = fieldData
     let fieldValues
     const optionActions = [m('a', mi18n.get('addOption'), { className: 'add add-opt' })]
@@ -313,7 +320,10 @@ const FormBuilder = function(opts, element, $) {
 
     fieldOptions.push(optionsWrap)
 
-    return m('div', fieldOptions, { className: 'form-group field-options' }).outerHTML
+    return m('div', fieldOptions, { 
+      className: 'form-group field-options',
+      style: `display: ${isHidden ? 'none' : 'block'}` 
+    }).outerHTML
   }
 
   const defaultFieldAttrs = type => {
@@ -435,7 +445,7 @@ const FormBuilder = function(opts, element, $) {
           first: mi18n.get('enableOther'),
           second: mi18n.get('enableOtherMsg'),
         }),
-      options: () => fieldOptions(values),
+      options: isHidden => fieldOptions(values, isHidden),
       requireValidOption: () =>
         boolAttribute('requireValidOption', values, {
           first: ' ',
@@ -472,8 +482,10 @@ const FormBuilder = function(opts, element, $) {
     Object.keys(fieldAttrs).forEach(index => {
       const attr = fieldAttrs[index]
       const useDefaultAttr = [true]
-      const isDisabled = opts.disabledAttrs.includes(attr)
-
+      const isDisabled = opts.disabledAttrs.includes(attr);
+      const customDisable = (typeof values.disabledAttrs !== 'undefined' &&  values.disabledAttrs.includes(attr));
+      const customHidden = (typeof values.hiddenAttrs !== 'undefined' &&  values.hiddenAttrs.includes(attr));
+      
       if (opts.typeUserDisabledAttrs[type]) {
         const typeDisabledAttrs = opts.typeUserDisabledAttrs[type]
         useDefaultAttr.push(!typeDisabledAttrs.includes(attr))
@@ -484,12 +496,16 @@ const FormBuilder = function(opts, element, $) {
         useDefaultAttr.push(!userAttrs.includes(attr))
       }
 
-      if (isDisabled && !noDisable.includes(attr)) {
+      if (isDisabled && !noDisable.includes(attr) || customDisable) {
         useDefaultAttr.push(false)
       }
 
       if (useDefaultAttr.every(Boolean)) {
-        advFields.push(advFieldMap[attr](isDisabled))
+        if (customHidden) {
+          advFields.push(advFieldMap[attr](true));
+        } else {
+          advFields.push(advFieldMap[attr](isDisabled))
+        }
       }
     })
 
@@ -928,8 +944,10 @@ const FormBuilder = function(opts, element, $) {
 
     liContents.push(editPanel)
 
+    const customClassName = typeof values.customClassName == 'string' ? values.customClassName : ''; 
+
     const field = m('li', liContents, {
-      class: `${type}-field form-field`,
+      class: `${type}-field form-field ${customClassName}`,
       type: type,
       id: data.lastID,
     })
@@ -954,8 +972,10 @@ const FormBuilder = function(opts, element, $) {
       opts.typeUserEvents[type].onadd(field)
     }
 
+    const disableEditOnAdd = (typeof values.disableEditOnAdd !== 'undefined' && values.disableEditOnAdd);
+    
     if (isNew) {
-      if (opts.editOnAdd) {
+      if (opts.editOnAdd && !disableEditOnAdd) {
         h.closeAllEdit()
         h.toggleEdit(data.lastID, false)
       }
@@ -963,6 +983,7 @@ const FormBuilder = function(opts, element, $) {
         field.scrollIntoView({ behavior: 'smooth' })
       }
     }
+    console.log(field);
   }
 
   // Select field html, since there may be multiple
