@@ -37,7 +37,7 @@ document.getElementById('toggleBootstrap').addEventListener('click', toggleBootS
 jQuery(function($) {
   const fields = [
     {
-      type: 'checkbox',
+      type: 'checkbox-group',
       customType: 'signature',
       customClassName: 'signature-field',
       label: 'Signature',
@@ -239,13 +239,6 @@ jQuery(function($) {
         label: 'Volume Level',
         value: 1,
         max: 11,
-      },
-    },
-    'checkbox-group': {
-      randomize: {
-        label: 'Randomize',
-        type: 'checkbox',
-        value: false,
       },
     },
   }
