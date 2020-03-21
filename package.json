@@ -97,7 +97,8 @@
   },
   "dependencies": {
     "jquery": ">=3.4.1",
-    "jquery-ui-sortable": "*"
+    "jquery-ui-sortable": "*",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
