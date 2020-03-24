@@ -66,7 +66,7 @@ jQuery(function($) {
       label: 'Date/Time Saved',
       iconClassName: 'far fa-clock',
       customType: 'time-saved',
-      customClassName: 'time-saved-field',
+      className: 'time-saved',
       disableEditOnAdd: true,
       disabledFieldButtons: [
         'edit',

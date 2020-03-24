@@ -229,11 +229,16 @@ const FormBuilder = function(opts, element, $) {
       field.style = match[1]
     }
 
+    const isTimeSavedType = typeof field.customType !== 'undefined' && field.customType == 'time-saved';
+    
     if (isNew) {
       setTimeout(() => document.dispatchEvent(events.fieldAdded), 10)
+      if (isTimeSavedType && $('p.time-saved').length > 0) {
+        return false;
+      }
     }
 
-    if (typeof field.customType !== 'undefined' && field.customType == 'time-saved') {
+    if (isTimeSavedType) {
       const now = moment().format('MMMM DD, YYYY hh:mm:ss a');
       field.label = `Date/Time Saved: ${now}`;
     }
@@ -983,7 +988,6 @@ const FormBuilder = function(opts, element, $) {
         field.scrollIntoView({ behavior: 'smooth' })
       }
     }
-    console.log(field);
   }
 
   // Select field html, since there may be multiple
