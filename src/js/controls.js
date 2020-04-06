@@ -161,7 +161,6 @@ export default class Controls {
     if (opts.disableFields.length) {
       fieldOrder = fieldOrder.filter(type => !opts.disableFields.includes(type))
     }
-
     return fieldOrder.filter(Boolean)
   }
 
@@ -172,12 +171,21 @@ export default class Controls {
     const fragment = document.createDocumentFragment()
     empty(this.dom)
     // append controls to list
-    this.orderFields(this.controlList).forEach(controlKey => {
+    let fieldOrder = [];
+
+    if (typeof  this.opts.customOrder && this.opts.customOrder) {
+      fieldOrder = this.controlList.filter(type => !this.opts.disableFields.includes(type));
+    } else {
+      fieldOrder = this.orderFields(this.controlList);
+    }
+
+    fieldOrder.forEach(controlKey => {
       const control = this.allControls[controlKey]
       if (control) {
         fragment.appendChild(control)
       }
     })
+
     this.dom.appendChild(fragment)
   }
 }

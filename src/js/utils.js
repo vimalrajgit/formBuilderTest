@@ -228,7 +228,10 @@ export const markup = function(tag, content = '', attributes = {}) {
     if (attrs.hasOwnProperty(attr)) {
       const name = safeAttrName(attr)
       const attrVal = Array.isArray(attrs[attr]) ? unique(attrs[attr].join(' ').split(' ')).join(' ') : attrs[attr]
-      field.setAttribute(name, attrVal)
+      // prevent multiple tag for dropdown/select
+      if (!(name == 'multiple' && attrVal == false)) {
+        field.setAttribute(name, attrVal)
+      }
     }
   }
 

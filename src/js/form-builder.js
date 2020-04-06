@@ -278,7 +278,6 @@ const FormBuilder = function(opts, element, $) {
    * @return {String} field options markup
    */
   const fieldOptions = function(fieldData,isHidden = false) {
-    console.log(isHidden);
     const { type, values, name } = fieldData
     let fieldValues
     const optionActions = [m('a', mi18n.get('addOption'), { className: 'add add-opt' })]

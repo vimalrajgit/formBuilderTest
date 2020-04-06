@@ -247,6 +247,7 @@ jQuery(function($) {
   const disabledAttrs = ['placeholder', 'name']
 
   const fbOptions = {
+    customOrder: true,
     editOnAdd: true,
     disabledSubtypes: {
       text: ['password'],
