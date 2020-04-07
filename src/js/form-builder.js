@@ -1489,7 +1489,3 @@ jQuery.fn.formBuilder = function(methodOrOptions = {}, ...args) {
     return instance
   }
 }
-
-module.exports = function formBuilder (){
-  console.log('testing');
-}

@@ -1,7 +1,7 @@
 {
   "name": "formBuilder",
   "version": "3.4.2",
-  "main": "src/js/form-builder.js",
+  "main": "dist/form-builder.min.js",
   "homepage": "https://formbuilder.online/",
   "repository": {
     "url": "https://github.com/kevinchappell/formBuilder.git",
