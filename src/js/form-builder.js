@@ -1348,7 +1348,7 @@ const FormBuilder = function(opts, element, $) {
   $stage.on('mouseover mouseout', '.remove, .del-button', e =>
     $(e.target)
       .closest('li')
-      .toggleClass('delete'),
+      .toggleClass('delete-form'),
   )
 
   loadFields()

@@ -213,8 +213,8 @@
   }
 
   li.deleting,
-  li.delete:hover,
-  li:hover li.delete:hover {
+  li.delete-form:hover,
+  li:hover li.delete-form:hover {
     background-color: #fdd;
 
     .close-field {

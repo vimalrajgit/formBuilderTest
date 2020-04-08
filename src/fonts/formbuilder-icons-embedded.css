@@ -22,7 +22,8 @@
 }
 */
 
- [class^="icon-"]:before, [class*=" icon-"]:before {
+ .form-builder [class^="icon-"]:before, .form-builder [class*=" icon-"]:before,
+ .rendered-form [class^="icon-"]:before, .rendered-form [class*=" icon-"]:before {
   font-family: "formbuilder-icons";
   font-style: normal;
   font-weight: normal;
