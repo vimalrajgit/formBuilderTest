@@ -1,20 +1,20 @@
 {
-  "name": "formBuilder",
+  "name": "aashish-formBuilder",
   "version": "3.4.2",
   "main": "dist/form-builder.min.js",
   "homepage": "https://formbuilder.online/",
   "repository": {
-    "url": "https://github.com/kevinchappell/formBuilder.git",
+    "url": "https://github.com/aashishb-access/formBuilder.git",
     "type": "git"
   },
   "files": [
     "dist/**/*",
     "docs/**/*"
   ],
-  "author": "Kevin Chappell <kevin.b.chappell@gmail.com>",
+  "author": "Aashish Biradar <aashish.b@access-designs.com>",
   "contributors": [],
   "bugs": "https://github.com/kevinchappell/formBuilder/issues",
-  "description": "A jQuery plugin for drag and drop form building",
+  "description": "Custom formbuilder library",
   "keywords": [
     "jquery-plugin",
     "forms",
@@ -22,7 +22,7 @@
     "form builder",
     "form create"
   ],
-  "license": "MIT",
+  "license": "ISC",
   "ignore": [
     "**/*",
     "node_modules",
