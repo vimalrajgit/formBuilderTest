@@ -29,10 +29,65 @@ const toggleBootStrap = ({ target }) => {
   }
 }
 
+// include font awesome
+$('head').append('<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.12.1/css/all.css">');
+
 document.getElementById('toggleBootstrap').addEventListener('click', toggleBootStrap, false)
 
 jQuery(function($) {
   const fields = [
+    {
+      type: 'checkbox-group',
+      customType: 'signature',
+      customClassName: 'signature-field',
+      label: 'Signature',
+      iconClassName: 'fas fa-signature',
+      className: 'signature',
+      values: [
+        {
+          label:'Check to sign',
+          value: 0
+        }
+      ],
+      disabledAttrs: [
+        'toggle',
+        'access',
+        'inline',
+        'name',
+        'other'
+      ],
+      hiddenAttrs: [
+        'className',
+        'options'
+      ]
+    },
+    {
+      type: 'paragraph',
+      label: 'Date/Time Saved',
+      iconClassName: 'far fa-clock',
+      customType: 'time-saved',
+      className: 'time-saved',
+      disableEditOnAdd: true,
+      disabledFieldButtons: [
+        'edit',
+        'copy'
+      ],
+      attrs: [
+        {
+          customtype: 'date-time-saved'
+        }
+      ]
+    },
+    {
+      type: 'checkbox',
+      label: 'Checkbox',
+      iconClassName: 'far fa-check-square'
+    },
+    {
+      type: 'file',
+      label: 'File/Picture Upload',
+      iconClassName: 'fas fa-upload'
+    },
     {
       type: 'autocomplete',
       label: 'Custom Autocomplete',
@@ -186,19 +241,14 @@ jQuery(function($) {
         max: 11,
       },
     },
-    'checkbox-group': {
-      randomize: {
-        label: 'Randomize',
-        type: 'checkbox',
-        value: false,
-      },
-    },
   }
 
   // test disabledAttrs
   const disabledAttrs = ['placeholder', 'name']
 
   const fbOptions = {
+    customOrder: true,
+    editOnAdd: true,
     disabledSubtypes: {
       text: ['password'],
     },
@@ -225,7 +275,7 @@ jQuery(function($) {
     typeUserAttrs: typeUserAttrs,
     disableInjectedStyle: false,
     actionButtons: actionButtons,
-    disableFields: ['autocomplete', 'custom-tinymce'],
+    disableFields: ['file','checkbox-group','autocomplete', 'custom-tinymce'],
     replaceFields: replaceFields,
     disabledFieldButtons: {
       text: ['copy'],

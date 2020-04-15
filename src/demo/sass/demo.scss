@@ -62,3 +62,27 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+
+
+ul.ui-sortable li{
+  display: block;
+}
+
+.input-control span {
+  font-weight: 100;
+}
+
+.form-wrap.form-builder .stage-wrap.empty::before{
+  font-family: "Font Awesome 5 Pro";
+  font-weight: 900;
+  font-size: 50px;
+  content: "\f060";
+  position: absolute;
+  top: 44.5%;
+  right: 15px;
+}
+.form-wrap.form-builder .stage-wrap.empty::after{
+  content: 'Drag and drop components to build your form';
+  text-align: right;
+  margin-left: -75px;
+}
