@@ -1,19 +1,19 @@
 {
-  "name": "aashish-formBuilder",
-  "version": "3.4.2",
+  "name": "mf-form-builder",
+  "version": "3.4.3",
   "main": "dist/form-builder.min.js",
   "homepage": "https://formbuilder.online/",
   "repository": {
-    "url": "https://github.com/aashishb-access/formBuilder.git",
+    "url": "https://github.com/manufacton/formBuilder.git",
     "type": "git"
   },
   "files": [
     "dist/**/*",
     "docs/**/*"
   ],
-  "author": "Aashish Biradar <aashish.b@access-designs.com>",
+  "author": "Kevin Chappell <kevin.b.chappell@gmail.com>",
   "contributors": [],
-  "bugs": "https://github.com/kevinchappell/formBuilder/issues",
+  "bugs": "https://github.com/manufacton/formBuilder/issues",
   "description": "Custom formbuilder library",
   "keywords": [
     "jquery-plugin",
