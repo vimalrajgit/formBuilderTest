@@ -52,6 +52,7 @@ export const defaultOptions = {
     },
   },
   onAddField: (fieldId, fieldData) => fieldData,
+  afterAddField: noop,
   onClearAll: noop,
   onCloseFieldEdit: noop,
   onOpenFieldEdit: noop,

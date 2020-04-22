@@ -245,6 +245,7 @@ const FormBuilder = function(opts, element, $) {
 
     opts.onAddField(data.lastID, field)
     appendNewField(field, isNew)
+    opts.afterAddField();
 
     d.stage.classList.remove('empty')
   }
