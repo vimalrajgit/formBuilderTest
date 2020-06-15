@@ -7,6 +7,8 @@ import './control/index'
 import controlCustom from './control/custom'
 import { defaultI18n } from './config'
 import '../sass/form-render.scss'
+import { customizeField, getTimeSaved } from './custom'
+import _ from 'lodash'
 
 /**
  * FormRender Class
@@ -88,6 +90,8 @@ class FormRender {
           className: 'rendered-form',
         })
         this.appendChild(renderedFormWrap)
+
+        $(this).addClass('form-builder-container')
 
         fields.forEach(field => {
           // Determine if rows are being used. If so, create the row and append to its row-{group}
@@ -194,7 +198,7 @@ class FormRender {
         // determine the control class for this type, and then process it through the layout engine
         const controlClass = control.getClass(fieldData.type, fieldData.subtype)
         const field = engine.build(controlClass, sanitizedField)
-
+        customizeField(field, fieldData, opts)
         rendered.push(field)
       }
 
@@ -289,6 +293,7 @@ class FormRender {
         if (definedField.disabled) continue
 
         definedField.userData = userDataMap[definedField.name]
+        console.log(definedField);
       }
     })
 
@@ -328,6 +333,43 @@ class FormRender {
     }
     return formData
   }
+
+  /* 
+    updates formData for custom fields
+  */
+  update() {
+    const formData = _.cloneDeep(this.userData);
+    for (const field of formData) {
+      if (field.type === 'file') {
+        $(`.uploaded-files[ref=${field.name}] a`).each((el, fileDom) =>{
+          const imageUrl = $(fileDom).attr('href');
+          const name = $(fileDom).text();
+          if (!field.userData) {
+            console.log('if');
+            field.userData = [{ name, imageUrl }];
+            console.log(field.userData);
+          } else {
+            console.log('else');
+            field.userData.push({ name, imageUrl });
+          }
+          console.log(field, fileDom);
+        })
+      } else if (field.type === 'paragraph' && field.className === 'time-saved') {
+        const date = getTimeSaved();
+        field.userData = [date.now];
+        field.label = date.label;
+      } else if (field.type === 'checkbox-group') {
+        for (const option of field.values) {
+          if (field.userData && field.userData.includes(option.value)) {
+            option.selected = true;
+          } else {
+            delete option.selected;
+          }
+        }
+      }
+    }
+    return JSON.stringify(formData);
+  } 
 }
 
 ;(function() {

@@ -19,6 +19,7 @@ import events from './events'
 import { config } from './config'
 import control from './control'
 import controlCustom from './control/custom'
+import { customizeField } from './custom'
 
 /**
  * Utilities specific to form-builder.js
@@ -236,6 +237,15 @@ export default class Helpers {
             fieldData.values = _this.fieldOptionData($field)
           }
 
+          //make value from label if value not give
+          if (['checkbox-group', 'select', 'radio-group'].includes(fieldData.type)) {
+            for (const option of fieldData.values) {
+              if (option.value === '') {
+                option.value = `${option.label.toLowerCase().trim().replace(/ /g, '-')}`;
+              }
+            }
+          }
+
           formData.push(fieldData)
         }
       })
@@ -381,6 +391,7 @@ export default class Helpers {
 
     empty($prevHolder[0])
     $prevHolder[0].appendChild(preview)
+    customizeField($field, previewData, config.opts)
     preview.dispatchEvent(events.fieldRendered)
   }
 

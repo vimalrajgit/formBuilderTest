@@ -1,4 +1,3 @@
-import moment from 'moment';
 import '../sass/form-builder.scss'
 import throttle from 'lodash/throttle'
 import Dom from './dom'
@@ -140,6 +139,8 @@ const FormBuilder = function(opts, element, $) {
     cbWrap.appendChild(d.formActions)
   }
 
+  $(element).addClass('form-builder-container');
+
   $editorWrap.append(d.stage, cbWrap)
 
   if (element.type !== 'textarea') {
@@ -236,11 +237,6 @@ const FormBuilder = function(opts, element, $) {
       if (isTimeSavedType && $('p.time-saved').length > 0) {
         return false;
       }
-    }
-
-    if (isTimeSavedType) {
-      const now = moment().format('MMMM DD, YYYY hh:mm:ss a');
-      field.label = `Date/Time Saved: ${now}`;
     }
 
     opts.onAddField(data.lastID, field)
