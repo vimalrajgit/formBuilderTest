@@ -16,7 +16,7 @@ export const customizeField = function (field, fieldData, opts) {
         const $fileInput = $field.find('input[type="file"]');
         const div = $('<div></div>').insertAfter($fileInput);
         const btn = $('<button class="upload-files">Upload files</button>').appendTo(div);
-        const uploadedFiles = $(`<div class="uploaded-files" ref="${fieldData.id}"></div>`).appendTo(div);
+        const uploadedFiles = $(`<div class="uploaded-files" ref="${fieldData.name}"></div>`).appendTo(div);
         const { userData } = fieldData;
 
         const addFile = (fileObj, container, upload = false) => {

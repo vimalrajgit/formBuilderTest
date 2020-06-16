@@ -293,7 +293,6 @@ class FormRender {
         if (definedField.disabled) continue
 
         definedField.userData = userDataMap[definedField.name]
-        console.log(definedField);
       }
     })
 
@@ -345,14 +344,10 @@ class FormRender {
           const imageUrl = $(fileDom).attr('href');
           const name = $(fileDom).text();
           if (!field.userData) {
-            console.log('if');
             field.userData = [{ name, imageUrl }];
-            console.log(field.userData);
           } else {
-            console.log('else');
             field.userData.push({ name, imageUrl });
           }
-          console.log(field, fileDom);
         })
       } else if (field.type === 'paragraph' && field.className === 'time-saved') {
         const date = getTimeSaved();
