@@ -38,29 +38,27 @@ div[contenteditable="true"] {
 .filebox {
 	display: inline-flex;
 	margin: 4px 10px 6px 0;
-}
-
-.filebox>* {
-	border: 1px solid #43AAC7;
-	padding: 5px 10px;
-	background-color: #43AAC7;
-	cursor: pointer;
-}
-
-.filebox a {
-	margin-right: 1px;
-	max-width: 150px;
-	border-radius: 4px 0 0 4px;
-	text-align: left;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	text-decoration: none;
-	color: #000;
-}
-
-.filebox div {
-	border-radius: 0 4px 4px 0;
+	> * {
+		border: 1px solid #43AAC7;
+		padding: 5px 10px;
+		background-color: #43AAC7;
+		cursor: pointer;
+	}
+	a {
+		margin-right: 1px;
+		max-width: 150px;
+		border-radius: 4px 0 0 4px;
+		text-align: left;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-decoration: none;
+		color: #000;
+	}
+	
+	div {
+		border-radius: 0 4px 4px 0;
+	}
 }
 
 .formbuilder-checkbox {
@@ -71,20 +69,19 @@ div[contenteditable="true"] {
 	display: flex;
 	min-height: 60px;
 	align-items: center;
-}
-
-.signbox .signedby {
-	margin: 0 40px;
-}
-
-.signbox img {
-    margin: 0 5px 0 40px;
-    width: 200px;
-    height: 100px;
-}
-
-.signbox a {
-	text-decoration: underline;
+	.signedby {
+		margin: 0 40px;
+	}
+	
+	img {
+		margin: 0 5px 0 40px;
+		width: 200px;
+		height: 100px;
+	}
+	
+	a {
+		text-decoration: underline;
+	}
 }
 
 .form-wrap.form-builder .stage-wrap.empty::after {
@@ -96,10 +93,9 @@ div[contenteditable="true"] {
 
 ul.frmb-control li {
 	display: block;
-}
-
-ul.frmb-control li span {
-	font-weight: normal;
+	span {
+		font-weight: normal;
+	}
 }
 
 .frmb .sortable-options>li {
