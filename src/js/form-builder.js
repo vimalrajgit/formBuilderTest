@@ -230,7 +230,7 @@ const FormBuilder = function(opts, element, $) {
       field.style = match[1]
     }
 
-    const isTimeSavedType = typeof field.customType !== 'undefined' && field.customType == 'time-saved';
+    const isTimeSavedType = typeof field.className !== 'undefined' && field.className == 'time-saved';
     
     if (isNew) {
       setTimeout(() => document.dispatchEvent(events.fieldAdded), 10)
@@ -945,10 +945,8 @@ const FormBuilder = function(opts, element, $) {
 
     liContents.push(editPanel)
 
-    const customClassName = typeof values.customClassName == 'string' ? values.customClassName : ''; 
-
     const field = m('li', liContents, {
-      class: `${type}-field form-field ${customClassName}`,
+      class: `${type}-field form-field`,
       type: type,
       id: data.lastID,
     })

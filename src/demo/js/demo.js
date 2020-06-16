@@ -38,8 +38,6 @@ jQuery(function($) {
   const fields = [
     {
       type: 'checkbox-group',
-      customType: 'signature',
-      customClassName: 'signature-field',
       label: 'Signature',
       iconClassName: 'fas fa-signature',
       className: 'signature',
@@ -65,7 +63,6 @@ jQuery(function($) {
       type: 'paragraph',
       label: 'Date/Time Saved',
       iconClassName: 'far fa-clock',
-      customType: 'time-saved',
       className: 'time-saved',
       disableEditOnAdd: true,
       disabledFieldButtons: [
