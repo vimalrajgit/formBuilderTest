@@ -9,16 +9,14 @@ export const getTimeSaved = () => {
 export const customizeField = function (field, fieldData, opts) {
     const $field = $(field)
     const $elem = $field.find(`#${fieldData.id}`);
-    console.log($elem);
     if ($elem.hasClass('customized')) return;
     $elem.addClass('customized');
-    console.log({ $elem, $field, fieldData, opts });
+
     if (fieldData.type === 'file') {
         const $fileInput = $field.find('input[type="file"]');
-        const id = $fileInput.attr('id');
         const div = $('<div></div>').insertAfter($fileInput);
         const btn = $('<button class="upload-files">Upload files</button>').appendTo(div);
-        const uploadedFiles = $(`<div class="uploaded-files" ref="${id}"></div>`).appendTo(div);
+        const uploadedFiles = $(`<div class="uploaded-files" ref="${fieldData.id}"></div>`).appendTo(div);
         const { userData } = fieldData;
 
         const addFile = (fileObj, container, upload = false) => {
@@ -56,9 +54,9 @@ export const customizeField = function (field, fieldData, opts) {
         const timeSaved = getTimeSaved().label;
         $field.find('p.time-saved').text(timeSaved);
     } else if (fieldData.type === 'paragraph') {
+        const { fileUploadApi } = opts;
         const formElements = $field.find('.form-elements');
-        if (formElements.length !== 0) {
-
+        if (typeof fileUploadApi === 'function' && formElements.length !== 0) {
             if (formElements.hasClass('customized')) return;
             formElements.addClass('customized');
             
@@ -66,7 +64,7 @@ export const customizeField = function (field, fieldData, opts) {
             const elm = $('<div class="form-group label-wrap"></div>');
             $('<label>Add Image</label>').appendTo(elm);
             const inputWrap = $('<div class="input-wrap"></div>').appendTo(elm);
-            const fileInput = $('<input class="replaced" type="file">').hide().appendTo(inputWrap);
+            const fileInput = $('<input type="file">').appendTo(inputWrap);
             const uploadBtn =
                 $(`<button class="button has-text-primary is-white is-transparent">
                 <i class="fas fa-cloud-upload-alt fa-2x"></i>
@@ -90,7 +88,6 @@ export const customizeField = function (field, fieldData, opts) {
                         const frag = document.createDocumentFragment();
                         let node;
                         let lastNode;
-                        // eslint-disable-next-line no-cond-assign
                         while ((node = el.firstChild)) {
                             lastNode = frag.appendChild(node);
                         }
@@ -109,26 +106,23 @@ export const customizeField = function (field, fieldData, opts) {
                 }
             }
 
-            uploadBtn.click(() => $(fileInput).click());
-            
-            const { fileUploadApi } = opts;
-            if (typeof fileUploadApi === 'function') {
-                fileInput.change(() => {
-                    const inputFiles = $(fileInput).prop('files');
-                    for (const fileObj of inputFiles) {
-                        fileUploadApi(fileObj)
-                            .then((file) => {
-                                const imgHTML = `<img src="${file.imageUrl}">&nbsp;`;
-                                txtInput.focus();
-                                pasteHtmlAtCaret(imgHTML);
-    
-                                // update label
-                                $field.find('label.field-label').html(txtInput.html());
-                            })
-                    }
-                    $(fileInput).val(null);
-                });
-            }
+            uploadBtn.click(() => $(fileInput).click());            
+
+            fileInput.change(() => {
+                const inputFiles = $(fileInput).prop('files');
+                for (const fileObj of inputFiles) {
+                    fileUploadApi(fileObj)
+                        .then((file) => {
+                            const imgHTML = `<img src="${file.imageUrl}">&nbsp;`;
+                            txtInput.focus();
+                            pasteHtmlAtCaret(imgHTML);
+
+                            // update label
+                            $field.find('label.field-label').html(txtInput.html());
+                        })
+                }
+                $(fileInput).val(null);
+            });
         }
     } else if (fieldData.type === 'checkbox-group' && fieldData.className === 'signature' && opts.userInfo) {
         const { userInfo } = opts;
