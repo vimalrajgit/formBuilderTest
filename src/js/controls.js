@@ -173,7 +173,7 @@ export default class Controls {
     // append controls to list
     let fieldOrder = [];
 
-    if (typeof  this.opts.customOrder && this.opts.customOrder) {
+    if (this.opts.customOrder) {
       fieldOrder = this.controlList.filter(type => !this.opts.disableFields.includes(type));
     } else {
       fieldOrder = this.orderFields(this.controlList);
