@@ -241,7 +241,8 @@ export default class Helpers {
           if (['checkbox-group', 'select', 'radio-group'].includes(fieldData.type)) {
             for (const option of fieldData.values) {
               if (option.value === '') {
-                option.value = `${option.label.toLowerCase().trim().replace(/ /g, '-')}`;
+                const number = fieldData.values.indexOf(option) + 1;
+                option.value = `${option.label.toLowerCase().trim().replace(/ /g, '-')}-${number}`;
               }
             }
           }
