@@ -1,4 +1,3 @@
-import moment from 'moment';
 import '../sass/form-builder.scss'
 import throttle from 'lodash/throttle'
 import Dom from './dom'
@@ -140,6 +139,8 @@ const FormBuilder = function(opts, element, $) {
     cbWrap.appendChild(d.formActions)
   }
 
+  $(element).addClass('form-builder-container');
+
   $editorWrap.append(d.stage, cbWrap)
 
   if (element.type !== 'textarea') {
@@ -229,18 +230,13 @@ const FormBuilder = function(opts, element, $) {
       field.style = match[1]
     }
 
-    const isTimeSavedType = typeof field.customType !== 'undefined' && field.customType == 'time-saved';
+    const isTimeSavedType = typeof field.className !== 'undefined' && field.className == 'time-saved';
     
     if (isNew) {
       setTimeout(() => document.dispatchEvent(events.fieldAdded), 10)
       if (isTimeSavedType && $('p.time-saved').length > 0) {
         return false;
       }
-    }
-
-    if (isTimeSavedType) {
-      const now = moment().format('MMMM DD, YYYY hh:mm:ss a');
-      field.label = `Date/Time Saved: ${now}`;
     }
 
     opts.onAddField(data.lastID, field)
@@ -949,10 +945,8 @@ const FormBuilder = function(opts, element, $) {
 
     liContents.push(editPanel)
 
-    const customClassName = typeof values.customClassName == 'string' ? values.customClassName : ''; 
-
     const field = m('li', liContents, {
-      class: `${type}-field form-field ${customClassName}`,
+      class: `${type}-field form-field`,
       type: type,
       id: data.lastID,
     })
