@@ -1,4 +1,5 @@
 import moment from 'moment';
+import _ from 'lodash'
 
 export const getTimeSaved = () => {
     const now = moment().format('MMMM DD, YYYY hh:mm:ss a');
@@ -27,7 +28,7 @@ export const customizeField = function (field, fieldData, opts) {
                     const removeBtn = $('<div>x</div>').appendTo(div);
                     removeBtn.click(() => $(div).remove());
                 }
-            } 
+            }
             const { fileUploadApi } = opts;
             if (upload && typeof fileUploadApi === 'function') {
                 fileUploadApi(fileObj).then(file => addToContainer(file));
@@ -59,7 +60,7 @@ export const customizeField = function (field, fieldData, opts) {
         if (typeof fileUploadApi === 'function' && formElements.length !== 0) {
             if (formElements.hasClass('customized')) return;
             formElements.addClass('customized');
-            
+
             // build elements
             const elm = $('<div class="form-group label-wrap"></div>');
             $('<label>Add Image</label>').appendTo(elm);
@@ -106,7 +107,7 @@ export const customizeField = function (field, fieldData, opts) {
                 }
             }
 
-            uploadBtn.click(() => $(fileInput).click());            
+            uploadBtn.click(() => $(fileInput).click());
 
             fileInput.change(() => {
                 const inputFiles = $(fileInput).prop('files');
@@ -135,6 +136,11 @@ export const customizeField = function (field, fieldData, opts) {
             signBox.append(`<span class="signedby">Signed by: ${userInfo.name}</span>`);
             signBox.append(`<a href="${userInfo.accountUrl}" target="_blank">Add a signature image</a>`);
         }
+    } else if (fieldData.type === 'checkbox-group' && fieldData.required && fieldData.other && fieldData.userData) {
+        const otherValue = _.difference(fieldData.userData, _.map(fieldData.values, 'value'));
+        if (otherValue && otherValue.length > 0) {
+            $field.find(`#${fieldData.name}-other`).prop('checked', true);
+            $field.find(`#${fieldData.name}-other-value`).val(otherValue[0]);
+        }
     }
-
 }

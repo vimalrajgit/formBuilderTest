@@ -361,6 +361,10 @@ class FormRender {
             delete option.selected;
           }
         }
+        if (field.required && field.other && field.userData && $(`#${field.name}-other`).prop('checked')) {
+          const otherValue = $(`#${field.name}-other-value`).val();
+          field.userData[field.userData.length - 1] = otherValue;
+        }
       }
     }
     return JSON.stringify(formData);
