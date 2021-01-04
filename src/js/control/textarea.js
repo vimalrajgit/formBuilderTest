@@ -4,6 +4,12 @@ import control from '../control';
  * Text input class
  * Output a <input type="text" ... /> form element
  */
+
+function setTextAreaHeight(el) {
+  el.style.height = 'auto';
+  el.style.cssText = `height: ${el.scrollHeight}px !important`;
+}
+
 export default class controlTextarea extends control {
 
   /**
@@ -26,6 +32,12 @@ export default class controlTextarea extends control {
   build() {
     const {value = '', ...attrs} = this.config;
     this.field = this.markup('textarea', this.parsedHtml(value), attrs);
+    const printAttrs = {
+      ...attrs,
+      innerText: attrs['userData'][0],
+      className: "print-display",
+    }
+    this.field = [...this.field, this.markup('div', this.parsedHtml(value), printAttrs)]
     return this.field;
   }
 
@@ -37,6 +49,13 @@ export default class controlTextarea extends control {
     if(this.config.userData){       
       $('#'+this.config.name).val(this.config.userData[0]);        
     }
+    const doc = document.querySelectorAll('textarea.form-control');
+    doc.forEach((el) => {
+      setTextAreaHeight(el)
+      el.addEventListener('input', () => {
+        setTextAreaHeight(el)
+      });
+    });
   }
     
   /**
