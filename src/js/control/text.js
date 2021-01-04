@@ -27,6 +27,12 @@ export default class controlText extends control {
     name = this.config.multiple ? `${name}[]` : name
     const inputConfig = Object.assign({}, this.config, { name })
     this.dom = this.markup('input', null, inputConfig)
+    const printAttrs = {
+      ...inputConfig,
+      innerText: inputConfig['userData'],
+      className: "print-display",
+    }
+    this.dom = [...this.dom, this.markup('div', null, printAttrs)]
     return this.dom
   }
 

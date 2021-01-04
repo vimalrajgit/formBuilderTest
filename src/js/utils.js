@@ -233,6 +233,7 @@ export const markup = function(tag, content = '', attributes = {}) {
         field.setAttribute(name, attrVal)
       }
     }
+    if(attr === 'innerText' && attrs[attr]) field.innerText = attrs[attr]
   }
 
   if (content) {
