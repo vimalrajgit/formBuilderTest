@@ -30,7 +30,7 @@ export default class controlText extends control {
     const printAttrs = {
       ...inputConfig,
       innerText: inputConfig['userData'],
-      className: "print-display",
+      className: 'print-display',
     }
     this.dom = [...this.dom, this.markup('div', null, printAttrs)]
     return this.dom

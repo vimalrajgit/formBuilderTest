@@ -35,7 +35,7 @@ export default class controlTextarea extends control {
     const printAttrs = {
       ...attrs,
       innerText: attrs['userData'][0],
-      className: "print-display",
+      className: 'print-display',
     }
     this.field = [...this.field, this.markup('div', this.parsedHtml(value), printAttrs)]
     return this.field;
