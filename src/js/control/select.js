@@ -138,13 +138,13 @@ export default class controlSelect extends control {
       if(data.multiple){
         let innerText = '';
         if(!data.userData) return this.dom;
-        for(let selectedOpt of data.userData){
+        for(const selectedOpt of data.userData){
           innerText = innerText.concat(options.find(o => o.value === selectedOpt).innerText, '\n')
         }
         const printAttrs = {
           ...data,
           innerText,
-          className: "print-display",
+          className: 'print-display',
         }
         this.dom = [...this.dom, this.markup('div', null, printAttrs)]
       }      
