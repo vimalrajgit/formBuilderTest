@@ -23,10 +23,18 @@ export const customizeField = function (field, fieldData, opts) {
         const addFile = (fileObj, container, upload = false) => {
             const addToContainer = (file) => {
                 if (file) {
+                    const fileUrlSplit = file.imageUrl.split('.')
+                    const fileType = fileUrlSplit[fileUrlSplit.length -1]
+                    // Possible JPEG and PNG formats supported by img tag.
+                    const imageExt = ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp', 'png', 'svg'];
+                    const isFileAnImage = imageExt.includes(fileType)
                     const div = $('<div class="filebox"></div>').appendTo($(container));
-                    $(`<a href="${file.imageUrl}" target="_blank">${file.name}</a>`).appendTo(div);
-                    const removeBtn = $('<div>x</div>').appendTo(div);
+                    $(`<a href="${file.imageUrl}" target="_blank" class="${isFileAnImage ? 'image-url' : ''}">${file.name}</a>`).appendTo(div);
+                    const removeBtn = $('<div class="remove-icon">x</div>').appendTo(div);
                     removeBtn.click(() => $(div).remove());
+                    if(isFileAnImage){
+                        $(`<img src="${file.imageUrl}" class="form-image"></img>`).appendTo(div);
+                    }
                 }
             }
             const { fileUploadApi } = opts;
