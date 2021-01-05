@@ -134,6 +134,20 @@ export default class controlSelect extends control {
     // build & return the DOM elements
     if (type == 'select') {
       this.dom = this.markup(optionType, options, data)
+      // In Pdf print show only the selected options for multi-select drop downs. 
+      if(data.multiple){
+        let innerText = '';
+        if(!data.userData) return this.dom;
+        for(let selectedOpt of data.userData){
+          innerText = innerText.concat(options.find(o => o.value === selectedOpt).innerText, '\n')
+        }
+        const printAttrs = {
+          ...data,
+          innerText,
+          className: "print-display",
+        }
+        this.dom = [...this.dom, this.markup('div', null, printAttrs)]
+      }      
     } else {
       this.dom = this.markup('div', options, { className: type })
     }

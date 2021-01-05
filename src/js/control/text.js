@@ -27,6 +27,10 @@ export default class controlText extends control {
     name = this.config.multiple ? `${name}[]` : name
     const inputConfig = Object.assign({}, this.config, { name })
     this.dom = this.markup('input', null, inputConfig)
+    // Only for single line element add the print-display div.
+    if(inputConfig.type !== 'text') {
+      return this.dom;
+    }
     const printAttrs = {
       ...inputConfig,
       innerText: inputConfig['userData'],

@@ -32,6 +32,9 @@ export default class controlTextarea extends control {
   build() {
     const {value = '', ...attrs} = this.config;
     this.field = this.markup('textarea', this.parsedHtml(value), attrs);
+    if(!attrs['userData'] || !attrs['userData'][0]){
+      return this.field;
+    }
     const printAttrs = {
       ...attrs,
       innerText: attrs['userData'][0],
