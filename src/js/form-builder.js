@@ -881,7 +881,14 @@ const FormBuilder = function(opts, element, $) {
     if (type === 'hidden') {
       label = `${mi18n.get(type)}: ${values.name}`
     }
-    const disabledFieldButtons = opts.disabledFieldButtons[type] || values.disabledFieldButtons
+    const disabledFieldButtons = opts.disabledFieldButtons[type] || values.disabledFieldButtons || []
+
+    // disable edit for field with _id
+    const { dataAttrs } = opts
+    if (dataAttrs && dataAttrs.includes('_id') && values._id) {
+      disabledFieldButtons.push('edit', 'copy')
+    }
+
     let fieldButtons = [
       m('a', null, {
         type: 'remove',

@@ -199,6 +199,16 @@ export default class Helpers {
 
           fieldData = Object.assign({}, fieldData, _this.getAttrVals(field))
 
+          const { dataAttrs } = config.opts;
+          if (dataAttrs && dataAttrs.length) {
+            const _fieldAttrs = $field.data('fieldData');
+            if (_fieldAttrs) {
+              dataAttrs.forEach((a) => {
+                if (_fieldAttrs[a]) fieldData[a] = _fieldAttrs[a];
+              });
+            }
+          }
+
           if (fieldData.subtype) {
             if (fieldData.subtype === 'quill') {
               const id = `${fieldData.name}-preview`
@@ -382,6 +392,19 @@ export default class Helpers {
     previewData = trimObj(previewData, true)
 
     previewData.className = _this.classNames(field, previewData)
+
+    const { dataAttrs } = config.opts;
+    if (dataAttrs && dataAttrs.length) {
+      const _fieldData = $field.data('fieldData');
+      if (_fieldData) {
+        const _fieldAttrs = _fieldData.attrs;
+        if (_fieldAttrs) {
+          dataAttrs.forEach((a) => {
+            if (_fieldAttrs[a]) previewData[a] = _fieldAttrs[a];
+          });
+        }
+      }
+    }
 
     $field.data('fieldData', previewData)
 
