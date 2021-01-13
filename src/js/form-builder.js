@@ -1123,18 +1123,18 @@ const FormBuilder = function(opts, element, $) {
     e.stopPropagation()
     e.preventDefault()
     if (e.handled !== true) {
-      let cantEdit = false;
+      let cantEdit = false
       const $field = $(e.target).parents('.form-field:eq(0)')
       const { dataAttrs } = opts
       if (dataAttrs && dataAttrs.includes('_id')) {
         const fieldData = $field.data('fieldData');
-        cantEdit = fieldData && fieldData._id;
+        cantEdit = fieldData && fieldData._id
       }
       if (cantEdit) {
         if (typeof opts.editWarning === 'function') {
-          opts.editWarning();
+          opts.editWarning()
         } else {
-          return false;
+          return false
         }
       } else {
         const targetID = $field.attr('id')
