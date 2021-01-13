@@ -883,10 +883,10 @@ const FormBuilder = function(opts, element, $) {
     }
     const disabledFieldButtons = opts.disabledFieldButtons[type] || values.disabledFieldButtons || []
 
-    // disable edit for field with _id
+    // disable copy for field with _id
     const { dataAttrs } = opts
     if (dataAttrs && dataAttrs.includes('_id') && values._id) {
-      disabledFieldButtons.push('edit', 'copy')
+      disabledFieldButtons.push('copy')
     }
 
     let fieldButtons = [
@@ -1123,31 +1123,26 @@ const FormBuilder = function(opts, element, $) {
     e.stopPropagation()
     e.preventDefault()
     if (e.handled !== true) {
-      const targetID = $(e.target)
-        .parents('.form-field:eq(0)')
-        .attr('id')
-      h.toggleEdit(targetID)
+      let cantEdit = false
+      const $field = $(e.target).parents('.form-field:eq(0)')
+      const { dataAttrs } = opts
+      if (dataAttrs && dataAttrs.includes('_id')) {
+        const fieldData = $field.data('fieldData');
+        cantEdit = fieldData && fieldData._id
+      }
+      if (cantEdit) {
+        if (typeof opts.editWarning === 'function') {
+          opts.editWarning()
+        } else {
+          return false
+        }
+      } else {
+        const targetID = $field.attr('id')
+        h.toggleEdit(targetID)
+      }
       e.handled = true
     } else {
       return false
-    }
-  })
-
-  $stage.on('dblclick', 'li.form-field', e => {
-    if (['select', 'input', 'label'].includes(e.target.tagName.toLowerCase()) || e.target.contentEditable === 'true') {
-      return
-    }
-    e.stopPropagation()
-    e.preventDefault()
-    if (e.handled !== true) {
-      const targetID =
-        e.target.tagName == 'li'
-          ? $(e.target).attr('id')
-          : $(e.target)
-              .closest('li.form-field')
-              .attr('id')
-      h.toggleEdit(targetID)
-      e.handled = true
     }
   })
 
