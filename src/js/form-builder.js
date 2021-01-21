@@ -1348,6 +1348,29 @@ const FormBuilder = function(opts, element, $) {
       .toggleClass('delete-form'),
   )
 
+  // add image to text and image field
+  $stage.on('click touchstart', '.add-img', function() {
+    $(this).closest('.form-field').find('.add-img-inpt').click();
+  })
+
+  $stage.on('change', '.add-img-inpt', function() {
+    const $fld = $(this).closest('.form-field');
+    const txtInput = $fld.find('div[contenteditable="true"]');
+    const inputFiles = $(this).prop('files');
+    for (const fileObj of inputFiles) {
+      opts.fileUploadApi(fileObj)
+        .then((file) => {
+          const imgHTML = `<img src="${file.imageUrl}">&nbsp;`;
+          txtInput.focus();
+          h.pasteHtmlAtCaret(imgHTML);
+
+          // update label
+          $fld.find('label.field-label').html(txtInput.html());
+        })
+    }
+    $(this).val(null);
+  })
+
   loadFields()
 
   if (opts.disableInjectedStyle) {
