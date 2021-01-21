@@ -1158,4 +1158,35 @@ export default class Helpers {
 
     return data[type](formatted)
   }
+
+  pasteHtmlAtCaret(html) {
+    let sel;
+    let range;
+    if (window.getSelection) {
+      sel = window.getSelection();
+      if (sel.getRangeAt && sel.rangeCount) {
+        range = sel.getRangeAt(0);
+        range.deleteContents();
+        const el = document.createElement('div');
+        el.innerHTML = html;
+        const frag = document.createDocumentFragment();
+        let node;
+        let lastNode;
+        while ((node = el.firstChild)) {
+          lastNode = frag.appendChild(node);
+        }
+        range.insertNode(frag);
+
+        if (lastNode) {
+          range = range.cloneRange();
+          range.setStartAfter(lastNode);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      }
+    } else if (document.selection && document.selection.type !== 'Control') {
+      document.selection.createRange().pasteHTML(html);
+    }
+  }
 }

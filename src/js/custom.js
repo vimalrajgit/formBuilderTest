@@ -73,65 +73,12 @@ export const customizeField = function (field, fieldData, opts) {
             const elm = $('<div class="form-group label-wrap"></div>');
             $('<label>Add Image</label>').appendTo(elm);
             const inputWrap = $('<div class="input-wrap"></div>').appendTo(elm);
-            const fileInput = $('<input type="file">').appendTo(inputWrap);
-            const uploadBtn =
-                $(`<button class="button has-text-primary is-white is-transparent">
+            $('<input type="file" class="add-img-inpt">').appendTo(inputWrap);
+            $(`<button class="add-img button has-text-primary is-white is-transparent">
                 <i class="fas fa-cloud-upload-alt fa-2x"></i>
             </button>`).appendTo(inputWrap);
             formElements.find('.label-wrap').after(elm);
             formElements.find('.subtype-wrap').hide();
-
-            // event binding
-            const txtInput = $field.find('div[contenteditable="true"]');
-
-            const pasteHtmlAtCaret = function (html) {
-                let sel;
-                let range;
-                if (window.getSelection) {
-                    sel = window.getSelection();
-                    if (sel.getRangeAt && sel.rangeCount) {
-                        range = sel.getRangeAt(0);
-                        range.deleteContents();
-                        const el = document.createElement('div');
-                        el.innerHTML = html;
-                        const frag = document.createDocumentFragment();
-                        let node;
-                        let lastNode;
-                        while ((node = el.firstChild)) {
-                            lastNode = frag.appendChild(node);
-                        }
-                        range.insertNode(frag);
-
-                        if (lastNode) {
-                            range = range.cloneRange();
-                            range.setStartAfter(lastNode);
-                            range.collapse(true);
-                            sel.removeAllRanges();
-                            sel.addRange(range);
-                        }
-                    }
-                } else if (document.selection && document.selection.type !== 'Control') {
-                    document.selection.createRange().pasteHTML(html);
-                }
-            }
-
-            uploadBtn.click(() => $(fileInput).click());
-
-            fileInput.change(() => {
-                const inputFiles = $(fileInput).prop('files');
-                for (const fileObj of inputFiles) {
-                    fileUploadApi(fileObj)
-                        .then((file) => {
-                            const imgHTML = `<img src="${file.imageUrl}">&nbsp;`;
-                            txtInput.focus();
-                            pasteHtmlAtCaret(imgHTML);
-
-                            // update label
-                            $field.find('label.field-label').html(txtInput.html());
-                        })
-                }
-                $(fileInput).val(null);
-            });
         }
     } else if (fieldData.type === 'checkbox-group' && fieldData.className === 'signature' && opts.userInfo) {
         const { userInfo } = opts;
