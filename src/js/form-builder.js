@@ -888,6 +888,9 @@ const FormBuilder = function(opts, element, $) {
     if (dataAttrs && dataAttrs.includes('_id') && values._id) {
       disabledFieldButtons.push('copy')
     }
+    if (values.className === 'time-saved') {
+      disabledFieldButtons.push('edit', 'copy')
+    }
 
     let fieldButtons = [
       m('a', null, {
