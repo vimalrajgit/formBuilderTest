@@ -1,6 +1,6 @@
 {
   "name": "vimal-form-builder",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/form-builder.min.js",
   "homepage": "https://formbuilder.online/",
   "repository": {
