@@ -51,14 +51,14 @@ export const customizeField = function (field, fieldData, opts) {
             }
             userData.length = 0;
         }
-        btn.click(() => $fileInput.val(null).click());
+        btn.click(() => opts.fileUploadApi({ event: 'fileUploadTriggred' }));
 
-        $fileInput.change(() => {
-            const inputFiles = $fileInput.prop('files');
-            for (const fileObj of inputFiles) {
-                addFile(fileObj, uploadedFiles, true);
-            }
-        });
+        // $fileInput.change(() => {
+        //     const inputFiles = $fileInput.prop('files');
+        //     for (const fileObj of inputFiles) {
+        //         addFile(fileObj, uploadedFiles, true);
+        //     }
+        // });
     } else if (fieldData.type === 'paragraph' && fieldData.className === 'time-saved') {
         const timeSaved = getTimeSaved().label;
         $field.find('p.time-saved').text(timeSaved);
