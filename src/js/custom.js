@@ -51,7 +51,7 @@ export const customizeField = function (field, fieldData, opts) {
             }
             userData.length = 0;
         }
-        btn.click(() => opts.fileUploadApi({ event: 'fileUploadTriggred' }));
+        btn.click(() => opts.fileUploadApi({ event: 'fileUploadTriggred', field: fieldData }));
 
         // $fileInput.change(() => {
         //     const inputFiles = $fileInput.prop('files');
